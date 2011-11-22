@@ -2,9 +2,7 @@ module BenglerTestHelper
   module ActiveRecord
 
     class << self
-      def database_configuration(default_environment = 'test')
-        environment = ENV['RAILS_ENV'] || ENV['RACK_ENV'] || default_environment
-
+      def database_configuration(environment)
         require 'active_record'
         ::ActiveRecord::Base.configurations = YAML.load(File.open('config/database.yml'))
 

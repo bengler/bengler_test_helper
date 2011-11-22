@@ -5,7 +5,7 @@ namespace :db do
     task :load_bootstrap do
       bootstrap_file_name = File.expand_path('db/bootstrap.sql', '.')
       if File.exist?(bootstrap_file_name)
-        config = BenglerTestHelper::ActiveRecord.database_configuration
+        config = BenglerTestHelper::ActiveRecord.database_configuration('test')
         database_name = config['database']
         user_name = config['username']
         $stderr.puts "Loading bootstrap data"
