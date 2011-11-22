@@ -1,4 +1,6 @@
-require 'rake'
+unless defined?(Rake)
+  require 'rake'
+end
 
 Rake::TaskManager.class_eval do
   unless method_defined?(:remove_task)
