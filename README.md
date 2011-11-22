@@ -18,3 +18,8 @@ Also, it overrides Rails' default tasks:
    it uses `db:test:load_structure` and `db:test:load_bootstrap`.
 * `rake db:migrate`: Automatically saves schema to `db/development_structure.sql`
    by invoking `db:structure:dump`.
+
+For non-Rails projects, the following Rails-compatible tasks are provided:
+
+* `rake db:structure:dump`: Saves schema to `db/development_structure.sql` like
+   you would expect.
