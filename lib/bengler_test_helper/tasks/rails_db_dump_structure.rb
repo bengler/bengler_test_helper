@@ -3,8 +3,6 @@ require 'tempfile'
 namespace :db do
   namespace :structure do
 
-    Rake.application.remove_task :"db:structure:dump"
-
     desc 'Dump database schema to development_structure.sql'
     task :dump do
       config = BenglerTestHelper::ActiveRecord.database_configuration

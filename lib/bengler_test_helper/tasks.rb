@@ -6,6 +6,9 @@ Rake::TaskManager.class_eval do
   end
 end
 
+Rake.application.remove_task :"db:test:prepare"
+Rake.application.remove_task :"db:structure:dump"
+
 require 'bengler_test_helper/active_record'
 require 'bengler_test_helper/tasks/rails_db_test_prepare'
 require 'bengler_test_helper/tasks/rails_db_bootstrap_data'
