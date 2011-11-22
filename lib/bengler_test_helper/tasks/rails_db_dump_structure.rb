@@ -5,7 +5,7 @@ namespace :db do
 
     desc 'Dump database schema to development_structure.sql'
     task :dump do
-      config = BenglerTestHelper::ActiveRecord.database_configuration
+      config = BenglerTestHelper::ActiveRecord.database_configuration('development')
       unless %w(localhost 127.0.0.1).include?(config['host'])
         abort "Database configuration must use localhost."
       end
