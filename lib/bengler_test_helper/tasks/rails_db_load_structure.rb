@@ -12,26 +12,30 @@ namespace :db do
       user_name = config['username']
 
       found = false
-      IO.popen(%(psql -U '#{user_name}' -ltA --no-psqlrc)) do |file|
+      IO.popen(%(psql -ltA --no-psqlrc)) do |file|
         file.each_line do |line|
           found = true if line =~ /^#{Regexp.escape(database_name)}\|/
         end
       end
       if found
-        $stderr.puts "Dropping database"
-        system("dropdb -U '#{user_name}' '#{database_name}'")
+        unless system("dropdb '#{database_name}'")
+          abort "Could not drop database #{database_name}"
+        end
       end
 
-      $stderr.puts "Creating database"
-      unless system("createdb -U '#{user_name}' -O '#{user_name}' #{database_name}")
+      unless system("createdb -O '#{user_name}' #{database_name}")
         abort "Could not create database #{database_name}"
       end
 
-      $stderr.puts "Loading schema"
+      # Note that we load the schema using the current user, which must be a superuser,
+      # because some schema elements such as base types and C functions may only be
+      # created by a superuser
       schema_file_name = 'db/development_structure.sql'
-      unless system("psql -U '#{user_name}' -q -o /dev/null --no-psqlrc -d '#{database_name}' -f '#{schema_file_name}'")
-        abort "Failed to load SQL from #{schema_file_name}."
+      unless system("psql -1 -q -o /dev/null --no-psqlrc -d '#{database_name}' -f '#{schema_file_name}'")
+        abort "Failed to load SQL from #{schema_file_name}. Ensure that your own Postgres user is a superuser."
       end
+
+      $stderr.puts "Database #{database_name} loaded from #{schema_file_name}."
     end
 
   end
