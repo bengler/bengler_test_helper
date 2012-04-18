@@ -8,10 +8,10 @@ namespace :db do
         config = BenglerTestHelper::ActiveRecord.database_configuration('test')
         database_name = config['database']
         user_name = config['username']
-        $stderr.puts "Loading bootstrap data"
         unless system("psql -U '#{user_name}' -q -o /dev/null --no-psqlrc -d '#{database_name}' -f '#{bootstrap_file_name}'")
           abort "Failed to load SQL from #{bootstrap_file_name}."
         end
+        $stderr.puts "Loaded bootstrap data from #{bootstrap_file_name}."
       end
     end
 
