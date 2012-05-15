@@ -10,13 +10,24 @@ Rake::TaskManager.class_eval do
   end
 end
 
-Rake.application.remove_task :"db:test:prepare"
-Rake.application.remove_task :"db:structure:dump"
 
-require 'bengler_test_helper/active_record'
+begin
+  # If there's no active record, we don't care.
+  require 'active_record'
 
-require 'bengler_test_helper/tasks/rails_db_test_prepare'
-require 'bengler_test_helper/tasks/rails_db_bootstrap_data'
-require 'bengler_test_helper/tasks/rails_db_load_structure'
-require 'bengler_test_helper/tasks/rails_db_dump_structure'
-require 'bengler_test_helper/tasks/rails_dump_schema_on_migrate'
+  Rake.application.remove_task :"db:test:prepare"
+  Rake.application.remove_task :"db:structure:dump"
+
+  require 'bengler_test_helper/active_record'
+
+  require 'bengler_test_helper/tasks/rails_db_test_prepare'
+  require 'bengler_test_helper/tasks/rails_db_bootstrap_data'
+  require 'bengler_test_helper/tasks/rails_db_load_structure'
+  require 'bengler_test_helper/tasks/rails_db_dump_structure'
+  require 'bengler_test_helper/tasks/rails_dump_schema_on_migrate'
+
+rescue LoadError => e
+  puts "We can't load ActiveRecord. That might be fine. #{e.message}"
+rescue Exception => e
+  puts "Bengel Tools Fail. #{e.message}."
+end
