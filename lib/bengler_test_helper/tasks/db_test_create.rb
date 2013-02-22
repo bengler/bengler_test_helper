@@ -9,7 +9,7 @@ namespace :db do
         abort "Could not drop database '#{config['database']}'"
       end
 
-      unless system("psql -tA postgres -c '\du' | grep -E '^#{config['username']}|' >/dev/null")
+      unless system("psql -tA postgres -c '\\du' | grep -E '^#{config['username']}|' >/dev/null")
         unless system("createuser -s '#{config['username']}'")
           abort "Could not create database user '#{config['username']}'"
         end
