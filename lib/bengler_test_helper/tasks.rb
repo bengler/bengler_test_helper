@@ -20,6 +20,7 @@ begin
   require 'bengler_test_helper/tasks/db_structure_dump'
   require 'bengler_test_helper/tasks/db_structure_load'
   require 'bengler_test_helper/tasks/db_test_config'
+  require 'bengler_test_helper/tasks/db_test_create'
   require 'bengler_test_helper/tasks/db_test_prepare'
 
 rescue LoadError => e
