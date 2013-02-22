@@ -1,6 +1,4 @@
-unless defined?(Rake)
-  require 'rake'
-end
+require 'rake' unless defined?(Rake)
 
 Rake::TaskManager.class_eval do
   unless method_defined?(:remove_task)
@@ -10,7 +8,6 @@ Rake::TaskManager.class_eval do
   end
 end
 
-
 begin
   # If there's no active record, we don't care.
   require 'active_record'
@@ -19,12 +16,10 @@ begin
   Rake.application.remove_task :"db:structure:dump"
 
   require 'bengler_test_helper/active_record'
-
-  require 'bengler_test_helper/tasks/rails_db_test_prepare'
-  require 'bengler_test_helper/tasks/rails_db_bootstrap_data'
-  require 'bengler_test_helper/tasks/rails_db_load_structure'
-  require 'bengler_test_helper/tasks/rails_db_dump_structure'
-  require 'bengler_test_helper/tasks/rails_dump_schema_on_migrate'
+  require 'bengler_test_helper/tasks/db_migrate'
+  require 'bengler_test_helper/tasks/db_structure_dump'
+  require 'bengler_test_helper/tasks/db_structure_load'
+  require 'bengler_test_helper/tasks/db_test_prepare'
 
 rescue LoadError => e
   puts "We can't load ActiveRecord. That might be fine. #{e.message}"
