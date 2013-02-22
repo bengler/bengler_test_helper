@@ -1,7 +1,7 @@
 namespace :db do
-  namespace :test do
+  namespace :structure do
     desc 'Recreate test database from development_structure.sql'
-    task :load_structure do
+    task :load do
       config = BenglerTestHelper::ActiveRecord.database_configuration('test')
       abort 'Database configuration must use localhost.' unless %w(localhost 127.0.0.1).include?(config['host'])
 
