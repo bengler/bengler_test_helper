@@ -6,7 +6,7 @@ namespace :db do
       abort 'Database configuration must use localhost.' unless %w(localhost 127.0.0.1).include?(config['host'])
 
       unless system("psql -tA postgres -c '\\du' | grep -E '^#{config['username']}\\|' >/dev/null")
-        unless system("psql postgres -c \"CREATE ROLE '#{config['username']}' SUPERUSER PASSWORD '#{config['password']}'")
+        unless system("psql postgres -c \"CREATE ROLE '#{config['username']}' SUPERUSER PASSWORD '#{config['password']}'\"")
           abort "Could not create database user '#{config['username']}'"
         end
       end
