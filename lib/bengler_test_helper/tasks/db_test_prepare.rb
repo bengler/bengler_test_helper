@@ -2,7 +2,7 @@ namespace :db do
   namespace :test do
     desc 'Prepare database for running tests.'
     task :prepare do
-      Rake::Task['db:test:config'].invoke unless File.exists?'config/database.yml'
+      Rake::Task['db:test:config'].invoke if ENV['SEMAPHORE'] or not File.exists?'config/database.yml'
       Rake::Task['db:test:create'].invoke
       Rake::Task['db:structure:load'].invoke
 
