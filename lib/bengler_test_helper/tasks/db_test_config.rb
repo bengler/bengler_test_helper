@@ -9,7 +9,7 @@ test:
   host: localhost
   database: #{name}_test
   username: #{name}
-  password:
+  password: #{(0...8).map{(97+rand(26)).chr}.join}
   encoding: unicode
 end
       )
