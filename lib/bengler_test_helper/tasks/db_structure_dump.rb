@@ -10,7 +10,8 @@ namespace :db do
       schema_file_name = 'db/development_structure.sql'
       Tempfile.open('schema') do |tempfile|
         tempfile.close
-        unless system("pg_dump --format=p --schema-only --no-privileges -U '#{config['username']}' -f '#{tempfile.path}' '#{config['database']}'")
+        unless system("pg_dump --format=p --schema-only --no-owner --no-privileges " \
+          "-U '#{config['username']}' -f '#{tempfile.path}' '#{config['database']}'")
           abort "Failed to dump SQL."
         end
         old_data = File.read(schema_file_name) rescue nil
