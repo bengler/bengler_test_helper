@@ -5,7 +5,8 @@ namespace :db do
       require 'bundler'
       b = Bundler.setup
       name = File.basename(`git config --get remote.origin.url`.strip, '.git')
-      File.open('config/database.yml', 'w').write <<-end
+      File.open('config/database.yml', 'w') do |f|
+        f.write <<-end
 test:
   adapter: #{b.gems['activerecord-postgis-adapter'].empty? ? 'postgresql' : 'postgis'}
   host: localhost
@@ -14,6 +15,7 @@ test:
   password: #{(0...8).map{(97+rand(26)).chr}.join}
   encoding: unicode
 end
+      end
     end
   end
 end

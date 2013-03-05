@@ -4,9 +4,8 @@ module BenglerTestHelper
     class << self
       def database_configuration(environment)
         require 'active_record'
-        config = YAML.load(File.open('config/database.yml'))
-        ::ActiveRecord::Base.configurations = config
-        config = config[environment] # can't fetch from ActiveRecord due to bug
+        ::ActiveRecord::Base.configurations = YAML.load(File.open('config/database.yml'))
+        config = ::ActiveRecord::Base.configuration[environment]
         raise "No database configuration for environment #{environment.inspect}." unless config
         config
       end
