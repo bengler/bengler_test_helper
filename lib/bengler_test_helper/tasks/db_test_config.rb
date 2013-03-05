@@ -3,7 +3,7 @@ namespace :db do
     desc 'Sets up a database config file.'
     task :config do
       name = File.basename(`git config --get remote.origin.url`.strip, '.git')
-      File.write('config/database.yml', <<-end
+      File.open('config/database.yml', 'w').write <<-end
 test:
   adapter: postgresql
   host: localhost
@@ -12,7 +12,6 @@ test:
   password: #{(0...8).map{(97+rand(26)).chr}.join}
   encoding: unicode
 end
-      )
     end
   end
 end
