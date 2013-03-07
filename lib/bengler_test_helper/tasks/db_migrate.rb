@@ -1,5 +1,7 @@
-namespace :db do
-  Rake::Task['migrate'].enhance do
-    Rake::Task['db:structure:dump'].invoke unless ['production', 'staging', 'test'].include?(ENV['RACK_ENV'])
+if (ENV['RACK_ENV'] || ENV['RAILS_ENV']) == 'development'
+  namespace :db do
+    Rake::Task['migrate'].enhance do
+      Rake::Task['db:structure:dump'].invoke
+    end
   end
 end
