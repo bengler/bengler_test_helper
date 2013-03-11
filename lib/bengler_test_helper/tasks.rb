@@ -1,3 +1,5 @@
+raise 'bengler_test_helper should only be loaded in the development or test envs.' unless ['development', 'test'].include?(ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'development')
+
 require 'rake' unless defined?(Rake)
 
 Rake::TaskManager.class_eval do
