@@ -1,7 +1,5 @@
-if (ENV['RACK_ENV'] || ENV['RAILS_ENV']) == 'development'
-  namespace :db do
-    Rake::Task['migrate'].enhance do
-      Rake::Task['db:structure:dump'].invoke
-    end
+namespace :db do
+  Rake::Task['migrate'].enhance do
+    Rake::Task['db:structure:dump'].invoke unless ENV['RACK_ENV'] == 'development'
   end
 end
