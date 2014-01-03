@@ -11,6 +11,7 @@ namespace :db do
       Tempfile.open('schema') do |tempfile|
         tempfile.close
         unless system("pg_dump --format=p --schema-only --no-owner --no-privileges " \
+          "-n public " \
           "-U '#{config['username']}' -f '#{tempfile.path}' '#{config['database']}'")
           abort "Failed to dump SQL."
         end
