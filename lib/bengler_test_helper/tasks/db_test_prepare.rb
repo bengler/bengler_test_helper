@@ -8,7 +8,8 @@ namespace :db do
       bootstrap_file_name = File.expand_path('db/bootstrap.sql', '.')
       if File.exist?(bootstrap_file_name)
         config = BenglerTestHelper::ActiveRecord.database_configuration('test')
-        unless system("psql -q -o /dev/null --no-psqlrc -d '#{config['database']}' -f '#{bootstrap_file_name}'")
+        unless system("psql -U #{ENV['USER']} -q -o /dev/null --no-psqlrc " \
+          "-d '#{config['database']}' -f '#{bootstrap_file_name}'")
           abort "Failed to load SQL from #{bootstrap_file_name}."
         end
         $stderr.puts "Loaded bootstrap data from #{bootstrap_file_name}."
