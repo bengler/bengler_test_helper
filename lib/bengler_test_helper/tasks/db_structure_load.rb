@@ -15,6 +15,7 @@ namespace :db do
 
       schema_file_name = 'db/development_structure.sql'
       unless system("psql -U #{ENV['USER']} -1 -q -o /dev/null --no-psqlrc " \
+        "-v ON_ERROR_ROLLBACK=off -v ON_ERROR_STOP=on " \
         "-d '#{test_config['database']}' -f '#{schema_file_name}'")
         abort "Failed to load SQL from #{schema_file_name}. Ensure that your own Postgres user is a superuser."
       end
